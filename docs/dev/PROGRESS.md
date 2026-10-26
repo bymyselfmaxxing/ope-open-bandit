@@ -61,3 +61,29 @@ gate:
 
 open questions:
   - none blocking Phase 1
+
+## Phase 2: Estimators
+
+status: done (gate passed 2026-10-25)
+
+built:
+  - src/ope/estimators.py: importance_weights, ipw, snipw, expected_rewards, dm, dr, ess,
+    per_sample_terms, std_error
+
+make check: PASS — ruff clean; 17 tests passed in 1.67s; coverage 94%
+
+sanity numbers:
+  - IPW over 200 small-bandit datasets: |mean estimate - true value| within 4 * SE of the mean
+    (passed after fixing the SE-of-the-mean in the test; estimator unbiased, estimates converge
+    to the true value as n grows: 0.2116 @ n=5k, 0.2100 @ n=50k, 0.2098 @ n=200k)
+  - SNIPW error shrinks with n (check passed for n = 1e3 -> 1e5)
+  - DR reduces to DM when weights are zero, and to IPW when the reward model is zero (tests pass)
+  - ESS within [1, n]; IPW equals sample mean when target equals behaviour
+
+gate:
+  [x] `make check` passes, run twice with the same seeds
+  [x] sanity numbers pasted into `docs/dev/PROGRESS.md`
+  [x] no test was loosened; estimator code is readable and well under 150 lines
+
+open questions:
+  - none blocking Phase 2
