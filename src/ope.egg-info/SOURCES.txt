@@ -1,0 +1,13 @@
+LICENSE
+pyproject.toml
+src/ope/__init__.py
+src/ope/data.py
+src/ope/tracking.py
+src/ope.egg-info/PKG-INFO
+src/ope.egg-info/SOURCES.txt
+src/ope.egg-info/dependency_links.txt
+src/ope.egg-info/requires.txt
+src/ope.egg-info/top_level.txt
+tests/test_config.py
+tests/test_data.py
+tests/test_tracking.py

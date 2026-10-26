@@ -1,0 +1,9 @@
+synthetic:
+  n: 5000
+  b: 1000
+  seed: 0
+
+real_data:
+  n: 10000
+  b: 500
+  seed: 0

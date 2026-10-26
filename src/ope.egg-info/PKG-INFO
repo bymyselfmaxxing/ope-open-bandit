@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: ope
+Version: 0.1.0
+Summary: Off-policy evaluation estimators on synthetic bandits and the Open Bandit Dataset
+Requires-Python: <3.12,>=3.11
+License-File: LICENSE
+Requires-Dist: numpy>=1.26
+Requires-Dist: pandas>=2.2
+Requires-Dist: scipy>=1.13
+Requires-Dist: scikit-learn>=1.5
+Requires-Dist: matplotlib>=3.9
+Requires-Dist: mlflow>=2.13
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: pytest-cov>=5.0; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+Dynamic: license-file
