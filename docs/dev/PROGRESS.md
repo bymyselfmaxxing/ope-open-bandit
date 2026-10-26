@@ -124,3 +124,25 @@ findings (drafted from grid outputs):
 
 open questions:
   - final findings wording and interpretation per hypothesis before Phase 4
+
+## Phase 4: Reward model and real-data runner (smoke only)
+
+status: done (gate passed 2026-10-26)
+
+built:
+  - src/ope/reward_model.py (train, predict_proba, predict_all, crossfit with design caching)
+  - experiments/run_real_data.py (BTS behaviour vs uniform target; agreement summaries; MLflow real_data runs)
+
+make check: PASS — ruff clean; 25 tests passed in ~40s; coverage 95%
+make smoke: PASS — 3m20s (fixtures, n=200, b=20) under 5 min
+
+sanity numbers:
+  - smoke agreement_ipw: ~0.5 (latest real_data MLflow runs); smoke pipeline completed in 3m20s
+
+gate:
+  [x] `make smoke` works and `make check` passes
+  [x] sanity numbers in docs/dev/PROGRESS.md
+  [ ] full real-data benchmark (Phase 5) not run; smoke is a pipeline check, not a result
+
+open questions:
+  - Phase 5 pending: full Men's data, n in {10k, 30k, 100k}, B=500 (reduced to 200 at n=100k if too slow).
