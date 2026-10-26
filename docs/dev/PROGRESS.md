@@ -87,3 +87,40 @@ gate:
 
 open questions:
   - none blocking Phase 2
+
+## Phase 3: Synthetic benchmark (the main evidence)
+
+status: done (gate passed 2026-10-26)
+
+built:
+  - src/ope/simulate.py (action_scores, policy_probs, true_value, sample_actions)
+  - src/ope/evaluation.py (run_replicate with reward error and propensity error dials)
+
+make check: PASS — ruff clean; 22 tests passed in 1.96s; coverage 94%
+
+sanity numbers:
+  - base cell (temp_e=1.0, eta=0, sigma=0, n=20000, B=1000, seed=0): ipw/snipw/dm/dr rmse ~0.0013-0.0016; v_true=0.81; coverage 0.95
+  - sigma=0.5 (propensity error) at n=20000: ipw/snipw/dr rmse ~0.0073; ess_mean ~15565; max_weight ~6.06
+  - eta=0.1 (reward error): ipw rmse ~0.0129; eta=0.2: ~0.0304 (monotone in eta)
+  - figures written to results/synthetic/figures/ (rmse_vs_n, coverage_vs_n, dr_vs_ipw)
+
+grid:
+  - 72 cells ran end to end: temp_e in {0.25, 1.0, 4.0} x eta in {0, 0.1, 0.2} x sigma in {0, 0.5} x
+    n in {500, 1000, 5000, 20000}, B=1000, seed=0; results in results/synthetic/
+
+gate:
+  [x] grid runs end to end; CSVs, configs and figures in results/, and every cell has an MLflow run
+  [x] every sanity check above passes and its numbers are in docs/dev/PROGRESS.md
+  [x] coverage was computed only against the known true value
+  [x] findings drafted from grid outputs (see below); final wording pending
+  [x] make check passes, earlier phases included
+
+findings (drafted from grid outputs):
+  - H1 direction: propensity error degrades IPW/SNIPW/DR rmse (0.0015 -> 0.0073) and lowers ESS,
+    consistent with the importance-weight hypothesis; DM did not degrade because it is model-based.
+  - H2 direction: DR tracks IPW at eta=0; reward error degrades all estimators similarly, so DR's
+    advantage over IPW is not yet distinguishable at this grid resolution.
+  - H3: estimator choice pending final comparisons across all cells.
+
+open questions:
+  - final findings wording and interpretation per hypothesis before Phase 4

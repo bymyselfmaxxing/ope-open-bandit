@@ -38,14 +38,15 @@ def snipw(r: np.ndarray, w: np.ndarray) -> float:
 
 
 def expected_rewards(q_pi: np.ndarray) -> np.ndarray:
-    """Per-row expected reward under the uniform policy: mean over actions."""
-    return np.mean(q_pi, axis=1)
+    """Per-row expected reward: sum over actions of the policy-weighted reward."""
+    return np.sum(q_pi, axis=1)
 
 
 def dm(q_pi: np.ndarray) -> float:
-    """DM model-based value: mean over rows of expected reward under the target policy.
+    """DM model-based value: mean over rows of the policy-weighted expected reward.
 
-    q_pi has shape (n, n_items): predicted reward for every item, not just the logged one.
+    q_pi has shape (n, n_items): reward for every item under the policy, already weighted
+    by the policy probability; the row sum is the expected reward for that unit.
     """
     return float(np.mean(expected_rewards(q_pi)))
 
